@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <stack>
+#include <vector>
 using namespace std;
 string terminals = {
     '=', '+', '-', '*', '/', '%', '|', '\\', '&', '^', '!', '#', '(', ')', '{', '}', '[', ']', '\'', ';', ':', ',', '.',
@@ -28,7 +30,7 @@ bool is_simple_grammar(){
 bool solve(){
 
     while (!st.empty()){
-
+        if (idx==input.size()){break;}
         char top = st.top();
         if (is_terminal(top)){
             if (top == input[idx]){
@@ -54,7 +56,7 @@ bool solve(){
             else
                 return false;
             st.pop();
-            for (int i = grammar[non_terminal + rule].second.size()-1; i >= 0; i--){
+            for (int i = (int)grammar[non_terminal + rule].second.size()-1; i >= 0; i--){
                 st.push(grammar[non_terminal + rule].second[i]);
             }
         }
@@ -63,6 +65,7 @@ bool solve(){
     }
     if (st.empty() && idx == input.size())
         return true;
+    return false;
 }
 
 int main(){
@@ -107,7 +110,7 @@ int main(){
             cout << endl;
             cout << "The rest of the unchecked string: ";
             cout << " [";
-            for (int i = idx; i < input.size(); i++){ cout << '\'' << input[i] << '\'' << ", "; }
+            for (int i = idx; i < input.size(); i++){ cout << '\'' << input[i] << '\''; if (i!=input.size()-1) cout << ", "; }
             cout << "]";
             cout << endl;
             if (f)
